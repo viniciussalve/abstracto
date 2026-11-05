@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@feedback-layer/core": "file:../feedback-layer/packages/core",
+    "@feedback-layer/vue": "file:../feedback-layer/packages/vue",
     "vue": "^3.5.0",
     "vue-router": "^4.5.0"
   },

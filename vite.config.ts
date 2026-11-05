@@ -5,5 +5,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
-  resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  resolve: {
+    dedupe: ['vue'], // @feedback-layer/vue é linkado de fora do projeto: precisa usar o mesmo Vue do app
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
 })
