@@ -1,0 +1,40 @@
+# AGENTS.md — Design system (Vue 3 + Vite + TS + Tailwind v4)
+
+O **código é a fonte da verdade** do design. Antes de criar qualquer UI:
+1. Leia `src/styles/tokens.css` (tokens) e `src/components/` (componentes existentes).
+2. Abra `/design-system` (`npm run dev`) e veja o que já existe.
+3. Reuse. Só crie algo novo se nada existente servir.
+
+## Regras duras
+- **Nada hardcoded.** Sem `#hex`, `rgb()`, `px` solto, `font-size` solto em componentes ou telas. Use classes de token (`bg-surface`, `text-fg-muted`, `gap-group`, `rounded-card`, `text-display`...). Falta um valor? Crie o token em `tokens.css` e adicione-o à página `/design-system`.
+- **Dark e light.** Todo token de cor tem valor nos dois temas (`:root` e `[data-theme='light']`). Teste os dois na página `/design-system`.
+- **Componente novo ou alterado => atualize `src/views/DesignSystem.vue`** no mesmo commit.
+- **Mobile-first.** Um único código responsivo. Alvo de toque >= `min-h-touch` (44px). Teste ~360px de largura e desktop.
+- **Acessibilidade.** Botão só com ícone exige `label`. Foco visível (já global). Contraste: texto sobre `bg`/`surface` usa `fg`/`fg-muted`; `fg-subtle` só para informação secundária não essencial.
+
+## Regras de composição (aprendidas na revisão do Paper "Kind wave")
+Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
+1. **Espaçamento em poucos níveis.** Agrupe em blocos. Dentro do grupo: `inner-sm`/`inner`. Entre grupos: `group` (>= 2x o maior `inner`). Cabeçalho de perfil = 2 grupos (identidade | ações). Nunca 4–5 espaços diferentes empilhados.
+2. **Hierarquia.** Título principal em `text-display`; rótulo de categoria pequeno acima (não na mesma linha de peso).
+3. **Acento (roxo) só na ação principal.** `BaseButton variant="primary"` no máximo 1 por tela/seção. Não use `accent` em contadores, gráficos, selos ou links. Ações secundárias usam `secondary` (com fundo visível, nunca texto solto ao lado do primary).
+4. **Sem informação repetida.** Contadores ficam nas abas, não também no cabeçalho. Um player só (nada de mini player duplicado). Uma navegação de retorno só (breadcrumb **ou** botão voltar).
+5. **Sem a mesma arte repetida.** Lista de faixas = `TrackRow` numerado, não grade de capas iguais.
+6. **Flutuantes nunca cobrem conteúdo.** Player, botão de IA, FAB: sempre renderize `<FloatingSafeArea />` no fim do conteúdo rolável.
+7. **Layout se adapta à quantidade de dados.** 1–2 itens => `AlbumCard layout="horizontal"`. Não deixe colunas vazias em grade.
+8. **Estados obrigatórios** para todo componente com dados: carregando, vazio, erro, imagem faltando/quebrada (use `CoverArt`), texto longo (truncate), hover, focus, disabled.
+9. **Dados reais.** Valores de exemplo (durações, contagens) nunca ficam fixos na implementação: vêm dos dados.
+
+## Antes de dar uma tela por pronta (checklist)
+- [ ] Só tokens e componentes do DS (grep por `#`, `px]` em `.vue`).
+- [ ] No máximo 1 `primary`; roxo em nenhum outro lugar.
+- [ ] Grupos de espaçamento claros; sem info duplicada.
+- [ ] Elemento flutuante => `FloatingSafeArea`.
+- [ ] Estados: vazio, erro, carregando, imagem quebrada, texto longo.
+- [ ] Dark + light, 360px + desktop.
+- [ ] `npm run build` passa.
+
+## Tom e marca
+Tom direto, curto, em português do Brasil na UI (a menos que o projeto diga o contrário). Sem exclamações gratuitas. Rótulos de botão: verbo curto ("Tocar", "Salvar"). Ajuste aqui quando houver identidade de marca definida.
+
+## Comandos
+`npm install` · `npm run dev` · `npm run build` (typecheck + build)

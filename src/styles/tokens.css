@@ -1,0 +1,115 @@
+@import 'tailwindcss';
+
+/*
+ * FONTE DA VERDADE dos design tokens.
+ * Valores crus ficam em :root (dark por padrão, [data-theme='light'] sobrescreve).
+ * `@theme inline` expõe os tokens como classes Tailwind (bg-surface, text-fg-muted, mt-group...).
+ * Nunca use valor hardcoded (#hex, px solto) em componentes: crie/atualize um token aqui.
+ */
+
+:root {
+  /* Superfícies */
+  --bg: #151517;
+  --bg-raised: #1b1b1c;
+  --surface: #2c2c2e;
+  --surface-2: #353638;
+  --placeholder: #2c2c2e;
+  --border: #f9fafb1a;
+
+  /* Texto */
+  --fg: #f9fafb;
+  --fg-muted: #cfd3d6;
+  --fg-subtle: #adb2b8;
+
+  /* Acento: SOMENTE a ação principal da tela (ver AGENTS.md) */
+  --accent: #9333ea;
+  --accent-hover: #a855f7;
+  --accent-fg: #ffffff;
+
+  /* Estados */
+  --focus-ring: #c084fc;
+  --danger: #f87171;
+}
+
+[data-theme='light'] {
+  --bg: #ffffff;
+  --bg-raised: #f6f7f8;
+  --surface: #eceef0;
+  --surface-2: #e1e4e7;
+  --placeholder: #dfe2e5;
+  --border: #15151720;
+  --fg: #151517;
+  --fg-muted: #3d4146;
+  --fg-subtle: #656b72;
+  --accent: #7e22ce;
+  --accent-hover: #6b21a8;
+  --accent-fg: #ffffff;
+  --focus-ring: #7e22ce;
+  --danger: #dc2626;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-placeholder: var(--placeholder);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-focus-ring: var(--focus-ring);
+  --color-danger: var(--danger);
+}
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala tipográfica (vinda do Paper "Kind wave") */
+  --text-micro: 0.625rem; /* 10 */
+  --text-caption: 0.75rem; /* 12 */
+  --text-body: 0.8125rem; /* 13 */
+  --text-body-lg: 0.875rem; /* 14 */
+  --text-title: 1.0625rem; /* 17 */
+  --text-heading: 1.125rem; /* 18 */
+  --text-display: 3.5rem; /* 56 */
+
+  /* Espaçamento semântico. Cabeçalhos têm DOIS grupos: use inner dentro do grupo e group entre grupos. */
+  --spacing-inner-sm: 0.8125rem; /* 13 */
+  --spacing-inner: 1rem; /* 16 */
+  --spacing-group: 2.125rem; /* 34: >= 2x o maior inner */
+  --spacing-touch: 2.75rem; /* 44: alvo mínimo de toque */
+
+  /* Raios */
+  --radius-control: 0.5rem;
+  --radius-card: 0.75rem;
+  --radius-pill: 999px;
+
+  /* Elementos flutuantes: reserve esta altura no fim da rolagem (ver FloatingSafeArea) */
+  --spacing-floating: 6.5rem;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  html[data-theme='light'] {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-bg font-sans text-body text-fg antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
