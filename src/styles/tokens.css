@@ -24,7 +24,7 @@
 
   /* Acento: SOMENTE a ação principal da tela (ver AGENTS.md) */
   --accent: #9333ea;
-  --accent-hover: #9f45f0; /* branco = 4,58:1 (era 3,96 com #a855f7); 3,98:1 contra --bg, ent�o o bot�o n�o some no hover */
+  --accent-hover: #9f45f0; /* branco = 4,58:1 (era 3,96 com #a855f7); 3,98:1 contra --bg, então o botão não some no hover */
   --accent-fg: #ffffff;
 
   /* Marcação/anotação (pino, realce, contador do Feedback Layer). NÃO é acento: não use na ação principal */
