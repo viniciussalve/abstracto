@@ -18,7 +18,7 @@ function toggleTheme() {
 }
 const tab = ref('a')
 
-const colors = ['bg', 'bg-raised', 'surface', 'surface-2', 'placeholder', 'fg', 'fg-muted', 'fg-subtle', 'accent', 'accent-hover', 'danger']
+const colors = ['bg', 'bg-raised', 'surface', 'surface-2', 'placeholder', 'fg', 'fg-muted', 'fg-subtle', 'accent', 'accent-hover', 'mark', 'mark-fg', 'success', 'danger']
 const texts = [
   ['text-micro', '10px'],
   ['text-caption', '12px'],
@@ -33,6 +33,7 @@ const spaces = [
   ['inner', '16px'],
   ['group', '34px'],
   ['touch', '44px'],
+  ['floating', '104px'],
 ] as const
 </script>
 
@@ -58,6 +59,52 @@ const spaces = [
       <p v-for="[cls, px] in texts" :key="cls" class="mb-2 truncate" :class="cls">
         {{ cls }} · {{ px }} · Ambré
       </p>
+    </section>
+
+    <section>
+      <h2 class="mb-inner text-heading font-bold">Marcação e estados (mark, success, danger)</h2>
+      <p class="mb-inner text-body text-fg-muted">
+        <code>mark</code> marca anotações (pino, realce, contador); nunca na ação principal. <code>success</code> e
+        <code>danger</code> sempre vêm com ícone + texto, nunca só cor.
+      </p>
+      <div class="flex flex-wrap items-center gap-inner-sm">
+        <span class="inline-flex size-6 items-center justify-center rounded-pill bg-mark text-caption font-semibold text-mark-fg">1</span>
+        <span class="rounded-control bg-surface px-3 py-1 text-body font-semibold text-success">✓ Enviado</span>
+        <span class="rounded-control bg-surface px-3 py-1 text-body font-semibold text-danger">⚠ Não foi possível enviar</span>
+      </div>
+      <pre class="mt-inner overflow-auto rounded-control border border-border bg-bg p-inner-sm font-mono text-caption text-fg-muted">font-mono: # [bug · medium] nota</pre>
+    </section>
+
+    <section>
+      <h2 class="mb-inner text-heading font-bold">Botão flutuante de infraestrutura (Feedback Layer)</h2>
+      <p class="mb-inner text-body text-fg-muted">
+        Usa o par invertido <code>bg-fg text-bg</code>, nunca <code>secondary</code> (surface sobre o fundo dá 1,2–1,3:1) nem
+        <code>primary</code>. Anel de 2px <code>bg</code> por fora e realce em anel duplo (<code>fg</code> + <code>bg</code>) separam
+        o elemento de qualquer fundo do host. Abaixo, sobre fundo escuro e claro, independente do tema da página.
+        Com o layer montado e visível (<code>html[data-feedback-layer='visible']</code>), <code>FloatingSafeArea</code> cresce de
+        104px para 144px (<code>--spacing-floating</code>).
+      </p>
+      <div class="grid gap-inner sm:grid-cols-2">
+        <div
+          v-for="t in ['dark', 'light']"
+          :key="t"
+          :data-theme="t"
+          class="flex items-center gap-group rounded-card border border-border bg-bg p-inner text-fg"
+        >
+          <button
+            type="button"
+            aria-label="Abrir Feedback Layer"
+            class="grid size-touch place-items-center rounded-pill border border-border bg-fg text-bg ring-2 ring-bg transition-colors hover:bg-fg-muted"
+          >
+            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
+              <path d="M8.5 11.5h7M8.5 14.5h4" />
+            </svg>
+          </button>
+          <div class="h-12 w-24 rounded-control bg-mark/15 outline-2 outline-fg ring-4 ring-bg" />
+          <code class="text-caption text-fg-muted">host {{ t }}</code>
+        </div>
+      </div>
     </section>
 
     <section>

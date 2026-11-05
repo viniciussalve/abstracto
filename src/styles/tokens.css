@@ -7,7 +7,8 @@
  * Nunca use valor hardcoded (#hex, px solto) em componentes: crie/atualize um token aqui.
  */
 
-:root {
+:root,
+[data-theme='dark'] {
   /* Superfícies */
   --bg: #151517;
   --bg-raised: #1b1b1c;
@@ -23,8 +24,13 @@
 
   /* Acento: SOMENTE a ação principal da tela (ver AGENTS.md) */
   --accent: #9333ea;
-  --accent-hover: #a855f7;
+  --accent-hover: #9f45f0; /* branco = 4,58:1 (era 3,96 com #a855f7); 3,98:1 contra --bg, ent�o o bot�o n�o some no hover */
   --accent-fg: #ffffff;
+
+  /* Marcação/anotação (pino, realce, contador do Feedback Layer). NÃO é acento: não use na ação principal */
+  --mark: #fbbf24;
+  --mark-fg: #151517;
+  --success: #4ade80;
 
   /* Estados */
   --focus-ring: #c084fc;
@@ -44,8 +50,11 @@
   --accent: #7e22ce;
   --accent-hover: #6b21a8;
   --accent-fg: #ffffff;
+  --mark: #b45309;
+  --mark-fg: #ffffff;
+  --success: #166534;
   --focus-ring: #7e22ce;
-  --danger: #dc2626;
+  --danger: #b91c1c; /* #dc2626 dava 4,15:1 sobre --surface; este dá 5,56:1 */
 }
 
 @theme inline {
@@ -61,12 +70,16 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-fg: var(--accent-fg);
+  --color-mark: var(--mark);
+  --color-mark-fg: var(--mark-fg);
+  --color-success: var(--success);
   --color-focus-ring: var(--focus-ring);
   --color-danger: var(--danger);
 }
 
 @theme {
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Escala tipográfica (vinda do Paper "Kind wave") */
   --text-micro: 0.625rem; /* 10 */
@@ -88,8 +101,16 @@
   --radius-card: 0.75rem;
   --radius-pill: 999px;
 
-  /* Elementos flutuantes: reserve esta altura no fim da rolagem (ver FloatingSafeArea) */
+  /* Elementos flutuantes: reserve esta altura no fim da rolagem (ver FloatingSafeArea).
+     6.5rem = só o PlayerBar. Com o Feedback Layer montado e visível (html[data-feedback-layer='visible'],
+     ver regra abaixo) sobe para 9rem = PlayerBar (76px) + folga (8px) + botão de 44px + margem (16px). */
   --spacing-floating: 6.5rem;
+}
+
+/* O Feedback Layer marca <html data-feedback-layer="visible"> enquanto está montado e visível.
+   Só então a área reservada cresce 2,5rem (40px) para o botão flutuante. */
+html[data-feedback-layer='visible'] {
+  --spacing-floating: 9rem;
 }
 
 @layer base {

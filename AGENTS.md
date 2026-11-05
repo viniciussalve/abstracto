@@ -19,7 +19,9 @@ Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
 3. **Acento (roxo) só na ação principal.** `BaseButton variant="primary"` no máximo 1 por tela/seção. Não use `accent` em contadores, gráficos, selos ou links. Ações secundárias usam `secondary` (com fundo visível, nunca texto solto ao lado do primary).
 4. **Sem informação repetida.** Contadores ficam nas abas, não também no cabeçalho. Um player só (nada de mini player duplicado). Uma navegação de retorno só (breadcrumb **ou** botão voltar).
 5. **Sem a mesma arte repetida.** Lista de faixas = `TrackRow` numerado, não grade de capas iguais.
-6. **Flutuantes nunca cobrem conteúdo.** Player, botão de IA, FAB: sempre renderize `<FloatingSafeArea />` no fim do conteúdo rolável.
+6. **Flutuantes nunca cobrem conteúdo.** Player, botão de IA, FAB: sempre renderize `<FloatingSafeArea />` no fim do conteúdo rolável. A área reservada (`--spacing-floating`, 9rem) comporta o player (76px) **mais** um botão flutuante de 44px acima dele; posicione o botão a `--spacing-floating − inner − touch` do rodapé.
+   - **Elemento flutuante de infraestrutura** (ex.: Feedback Layer) usa o par invertido `bg-fg text-bg`, não `secondary` nem `primary`: `surface` sobre o fundo dá só 1,2–1,3:1 e o botão some. Sem acento, anel de 2px `bg` por fora para separar de qualquer fundo.
+   - `mark` (amarelo) é só para marcar anotação (pino, realce, contador). Não é acento: nunca na ação principal. `success`/`danger` sempre com ícone e texto.
 7. **Layout se adapta à quantidade de dados.** 1–2 itens => `AlbumCard layout="horizontal"`. Não deixe colunas vazias em grade.
 8. **Estados obrigatórios** para todo componente com dados: carregando, vazio, erro, imagem faltando/quebrada (use `CoverArt`), texto longo (truncate), hover, focus, disabled.
 9. **Dados reais.** Valores de exemplo (durações, contagens) nunca ficam fixos na implementação: vêm dos dados.
