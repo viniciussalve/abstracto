@@ -40,3 +40,5 @@ Tom direto, curto, em português do Brasil na UI (a menos que o projeto diga o c
 
 ## Comandos
 `npm install` · `npm run dev` · `npm run build` (typecheck + build)
+
+**Feedback Layer (ferramenta de dev, `devDependencies` com `file:`):** o repo `feedback-layer` precisa estar clonado como irmão (`../feedback-layer`) e com o build feito, senão `npm install` e `npm run build` quebram: `cd ../feedback-layer && npm install && npm run build`. Ligado em `npm run dev` ou com `VITE_FEEDBACK=1` no build; sem a flag, o bundle de produção não carrega o pacote. Bridge: `npx feedback-bridge --port 7777 --inbox ./inbox` (em `../feedback-layer/packages/bridge`).
