@@ -1,0 +1,70 @@
+{
+  "_": "Entrada do gerador de tokens (scripts/tokens.mjs). Edite aqui e rode `npm run tokens`. Não edite as regiões `@tokens:begin … @tokens:end` do tokens.css à mão.",
+
+  "primary": "#f5c518",
+  "basePx": 16,
+  "phi": "golden",
+  "scaleLight": "legacy",
+
+  "accentStep": 500,
+  "accentFg": "auto",
+  "accentFgCandidates": ["#151517", "#ffffff"],
+  "hover": { "dark": 400, "light": 600 },
+  "focus": { "dark": 500, "light": 700 },
+
+  "accentSteps": {
+    "50": -2.5, "100": -2, "200": -1.5, "300": -1, "400": -0.5,
+    "500": 0, "600": 0.5, "700": 1, "800": 1.5, "900": 2
+  },
+  "chromaShade": { "cap": 1, "boost": 1.05 },
+
+  "type": {
+    "den": 4,
+    "steps": { "micro": -4, "caption": -3, "body": -2, "body-lg": -1, "title": 1, "heading": 2, "display": 10 }
+  },
+  "space": {
+    "den": 2,
+    "steps": { "inner-sm": -1, "inner": 0, "group": 3 },
+    "notes": { "group": ">= 2x o maior inner" }
+  },
+  "radius": {
+    "den": 2,
+    "steps": { "control": -3, "card": -1 }
+  },
+
+  "contrast": { "fgOnAccent": 4.5, "focus": 3 },
+  "primaryLimits": { "minChroma": 0.02, "maxLightness": 0.97, "minLightness": 0.15 },
+  "hueWarn": { "mark": 60, "success": 45, "danger": 45 },
+
+  "docRefs": ["AGENTS.md"],
+
+  "flOut": "../feedback-layer/packages/core/src/fallback-tokens.generated.ts",
+  "flVisibleSelector": "html[data-feedback-layer='visible']",
+  "flMirror": {
+    "colors": [
+      "bg", "bg-raised", "surface", "surface-2", "border", "fg", "fg-muted", "fg-subtle",
+      "accent", "accent-hover", "accent-fg", "focus-ring", "danger", "mark", "mark-fg", "success"
+    ],
+    "shared": {
+      "font-sans": "font-sans",
+      "font-mono": "font-mono",
+      "t-caption": "text-caption",
+      "t-body": "text-body",
+      "t-body-lg": "text-body-lg",
+      "t-title": "text-title",
+      "inner-sm": "spacing-inner-sm",
+      "inner": "spacing-inner",
+      "group": "spacing-group",
+      "touch": "spacing-touch",
+      "floating": "spacing-floating",
+      "r-control": "radius-control",
+      "r-card": "radius-card",
+      "r-pill": "radius-pill"
+    }
+  },
+  "flIgnore": [
+    "accent-50", "accent-100", "accent-200", "accent-300", "accent-400",
+    "accent-500", "accent-600", "accent-700", "accent-800", "accent-900",
+    "placeholder", "text-display", "text-heading", "text-micro"
+  ]
+}

@@ -5,13 +5,20 @@
  * Valores crus ficam em :root (dark por padrão, [data-theme='light'] sobrescreve).
  * `@theme inline` expõe os tokens como classes Tailwind (bg-surface, text-fg-muted, mt-group...).
  * Nunca use valor hardcoded (#hex, px solto) em componentes: crie/atualize um token aqui.
- *
+ */
+
+/* @tokens:begin header-scales */
+/*
  * PROPORÇÃO ÁUREA (φ = 1,6180339887). Todas as escalas saem dela:
  *   tipografia: passo = φ^(1/4) (×1,128; 4 passos = ×φ), base 1rem
  *   espaçamento e raios: passo = φ^(1/2) (×1,272; 2 passos = ×φ), base 1rem
  *   cor primária (accent-50…900): 500 = #F5C518; claros fecham a distância até o branco por φ^(-1/2) a cada passo
  *   (em OKLCH), escuros multiplicam a luminosidade por φ^(-1/2) a cada passo. Croma limitado ao gamut sRGB.
  * Valores em rem estão calculados e arredondados em 4 casas; o expoente fica no comentário de cada token.
+ */
+/* @tokens:end header-scales */
+
+/*
  * Exceção: --spacing-touch (44px) é mínimo de plataforma para toque, não parte da escala.
  */
 
@@ -40,11 +47,13 @@
   --fg-muted: #cfd3d6;
   --fg-subtle: #adb2b8;
 
+  /* @tokens:begin accent-dark */
   /* Acento (cor primária #F5C518): SOMENTE a ação principal da tela (ver AGENTS.md).
      Texto sobre o acento é escuro (--accent-fg): 11,2:1 sobre #F5C518. Branco daria 1,6:1 e não pode ser usado. */
   --accent: var(--accent-500);
   --accent-hover: var(--accent-400); /* claro: 12,5:1 com --accent-fg; 11,2:1 do acento contra --bg */
   --accent-fg: #151517;
+  /* @tokens:end accent-dark */
 
   /* Marcação/anotação (pino, realce, contador do Feedback Layer). NÃO é acento: não use na ação principal */
   --mark: #38bdf8; /* azul: distante do acento dourado; 8,5:1 sobre --bg */
@@ -52,12 +61,15 @@
   --success: #4ade80;
 
   /* Estados */
+  /* @tokens:begin focus-dark */
   --focus-ring: var(--accent-500); /* 11,2:1 contra --bg */
+  /* @tokens:end focus-dark */
   --danger: #f87171;
 }
 
 /* Escala da cor primária (proporção áurea, ver cabeçalho). Igual nos dois temas. */
 :root {
+  /* @tokens:begin accent-scale */
   --accent-50: #ffeec1;
   --accent-100: #ffeab1;
   --accent-200: #fee49b;
@@ -68,6 +80,7 @@
   --accent-700: #80660d;
   --accent-800: #5b4804;
   --accent-900: #403100;
+  /* @tokens:end accent-scale */
 }
 
 [data-theme='light'] {
@@ -80,13 +93,17 @@
   --fg: #151517;
   --fg-muted: #3d4146;
   --fg-subtle: #656b72;
+  /* @tokens:begin accent-light */
   --accent: var(--accent-500); /* #F5C518 sobre #ffffff dá só 1,6:1: o botão se separa do fundo pelo texto escuro (11,2:1) e pelo anel de foco */
   --accent-hover: var(--accent-600); /* 5,9:1 com --accent-fg */
   --accent-fg: #151517;
+  /* @tokens:end accent-light */
   --mark: #0369a1; /* 5,9:1 sobre --bg; 5,1:1 sobre --surface */
   --mark-fg: #ffffff;
   --success: #166534;
+  /* @tokens:begin focus-light */
   --focus-ring: var(--accent-700); /* 5,5:1 contra #ffffff */
+  /* @tokens:end focus-light */
   --danger: #b91c1c; /* #dc2626 dava 4,15:1 sobre --surface; este dá 5,56:1 */
 }
 
@@ -124,6 +141,7 @@
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* @tokens:begin type-scale */
   /* Escala tipográfica áurea: n quartos de passo = 1rem × φ^(n/4). 4 passos = ×φ. */
   --text-micro: 0.618rem; /* φ^(-4/4) = 9,9px */
   --text-caption: 0.697rem; /* φ^(-3/4) = 11,2px */
@@ -132,16 +150,21 @@
   --text-title: 1.1278rem; /* φ^(+1/4) = 18,0px */
   --text-heading: 1.272rem; /* φ^(+2/4) = 20,4px */
   --text-display: 3.3302rem; /* φ^(+10/4) = 53,3px */
+  /* @tokens:end type-scale */
 
+  /* @tokens:begin space-scale */
   /* Espaçamento áureo: 1rem × φ^(n/2). Cabeçalhos têm DOIS grupos: use inner dentro do grupo e group entre grupos. */
   --spacing-inner-sm: 0.7862rem; /* φ^(-1/2) = 12,6px */
   --spacing-inner: 1rem; /* φ^0 = 16px */
   --spacing-group: 2.0582rem; /* φ^(+3/2) = 32,9px: >= 2x o maior inner */
+  /* @tokens:end space-scale */
   --spacing-touch: 2.75rem; /* 44px: mínimo de plataforma para toque, fora da escala */
 
+  /* @tokens:begin radius-scale */
   /* Raios áureos: 1rem × φ^(n/2) */
   --radius-control: 0.4859rem; /* φ^(-3/2) = 7,8px */
   --radius-card: 0.7862rem; /* φ^(-1/2) = 12,6px */
+  /* @tokens:end radius-scale */
   --radius-pill: 999px;
 
   /* Elementos flutuantes: reserve esta altura no fim da rolagem (ver FloatingSafeArea).
