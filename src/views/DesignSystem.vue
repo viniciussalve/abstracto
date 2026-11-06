@@ -126,7 +126,7 @@ const spaces = [
       <h2 class="mb-inner text-heading font-bold">Espaçamento</h2>
       <div v-for="[n, px] in spaces" :key="n" class="mb-2 flex items-center gap-inner text-body">
         <code class="w-24 text-fg-muted">{{ n }}</code>
-        <div class="h-3 rounded-pill bg-accent" :style="{ width: px }" />
+        <div class="h-3 rounded-pill bg-fg-subtle" :style="{ width: px }" />
         <span class="text-fg-subtle">{{ px }}</span>
       </div>
     </section>

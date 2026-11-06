@@ -26,6 +26,13 @@ Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
 8. **Estados obrigatórios** para todo componente com dados: carregando, vazio, erro, imagem faltando/quebrada (use `CoverArt`), texto longo (truncate), hover, focus, disabled.
 9. **Dados reais.** Valores de exemplo (durações, contagens) nunca ficam fixos na implementação: vêm dos dados.
 
+## Fonte e escalas (proporção áurea, φ = 1,618)
+- **Fonte:** Inter 4.1 variável, hospedada em `src/assets/fonts/` (licença OFL junto). Não use Google Fonts nem outra família.
+- **Escalas vêm de φ e ficam em `tokens.css`:** tipografia = 1rem × φ^(n/4); espaçamento e raios = 1rem × φ^(n/2). Não invente valor fora da escala: crie o token com o expoente no comentário.
+- **Exceção:** `--spacing-touch` (44px) é mínimo de toque da plataforma, fora da escala.
+- **Cor primária `#F5C518`** (`accent-500`). Escala `accent-50…900` em OKLCH, passo φ^-1/2. Texto sobre o acento é sempre `accent-fg` (escuro): branco dá 1,6:1.
+- **Foco:** `accent-500` no escuro e `accent-700` no claro. `mark` (azul) é só anotação, nunca ação principal.
+
 ## Antes de dar uma tela por pronta (checklist)
 - [ ] Só tokens e componentes do DS (grep por `#`, `px]` em `.vue`).
 - [ ] No máximo 1 `primary`; o acento (`accent`) em nenhum outro lugar.
