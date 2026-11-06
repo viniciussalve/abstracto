@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FL_REPO: viniciussalve/feedback-layer
+      FL_DEFAULT_BRANCH: main
+    steps:
+      # O DS depende de `file:../feedback-layer/...`: o feedback-layer precisa estar ao lado, já buildado.
+      - uses: actions/checkout@v4
+        with:
+          path: design-system-vue
+
+      # O nome do branch é dado externo (vem do autor do PR): entra só por variável de ambiente, sempre entre
+      # aspas, e é validado antes de ser usado. Nunca interpolar `${{ github.head_ref }}` dentro de `run:`.
+      - name: Escolher o ref do feedback-layer (branch de mesmo nome, senão main)
+        id: flref
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          branch="${HEAD_REF:-$REF_NAME}"
+          ref="$FL_DEFAULT_BRANCH"
+          if [[ "$branch" =~ ^[A-Za-z0-9._/-]+$ ]] && git ls-remote --exit-code --heads "https://github.com/${FL_REPO}.git" "refs/heads/${branch}" >/dev/null 2>&1; then
+            ref="$branch"
+          fi
+          echo "Branch deste repo: ${branch}"
+          echo "Ref do feedback-layer: ${ref}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.FL_REPO }}
+          ref: ${{ steps.flref.outputs.ref }}
+          path: feedback-layer
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            design-system-vue/package-lock.json
+            feedback-layer/package-lock.json
+
+      - name: feedback-layer, instalar e buildar
+        working-directory: feedback-layer
+        run: |
+          npm ci
+          npm run build
+
+      - name: design-system-vue, instalar
+        working-directory: design-system-vue
+        run: npm ci
+
+      - name: design-system-vue, tokens gerados em dia (tokens.css e fallback do feedback-layer)
+        working-directory: design-system-vue
+        run: npm run tokens:check
+
+      - name: design-system-vue, typecheck e build
+        working-directory: design-system-vue
+        run: npm run build
