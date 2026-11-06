@@ -18,20 +18,21 @@ function toggleTheme() {
 }
 const tab = ref('a')
 
-const colors = ['bg', 'bg-raised', 'surface', 'surface-2', 'placeholder', 'fg', 'fg-muted', 'fg-subtle', 'accent', 'accent-hover', 'mark', 'mark-fg', 'success', 'danger']
+const colors = ['bg', 'bg-raised', 'surface', 'surface-2', 'placeholder', 'fg', 'fg-muted', 'fg-subtle', 'accent', 'accent-hover', 'accent-fg', 'mark', 'mark-fg', 'success', 'danger']
 const texts = [
-  ['text-micro', '10px'],
-  ['text-caption', '12px'],
-  ['text-body', '13px'],
-  ['text-body-lg', '14px'],
-  ['text-title', '17px'],
-  ['text-heading', '18px'],
-  ['text-display', '56px'],
+  ['text-micro', '9,9px · φ^-1'],
+  ['text-caption', '11,2px · φ^-3/4'],
+  ['text-body', '12,6px · φ^-1/2'],
+  ['text-body-lg', '14,2px · φ^-1/4'],
+  ['text-title', '18,0px · φ^1/4'],
+  ['text-heading', '20,4px · φ^1/2'],
+  ['text-display', '53,3px · φ^5/2'],
 ] as const
+const accentScale = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const
 const spaces = [
-  ['inner-sm', '13px'],
+  ['inner-sm', '12.6px'],
   ['inner', '16px'],
-  ['group', '34px'],
+  ['group', '32.9px'],
   ['touch', '44px'],
   ['floating', '104px'],
 ] as const
@@ -55,7 +56,21 @@ const spaces = [
     </section>
 
     <section>
-      <h2 class="mb-inner text-heading font-bold">Tipografia</h2>
+      <h2 class="mb-inner text-heading font-bold">Cor primária · escala áurea (#F5C518)</h2>
+      <p class="mb-inner text-body text-fg-muted">
+        500 é a primária. Cada passo para claro fecha φ^-1/2 da distância até o branco; cada passo para escuro multiplica
+        a luminosidade por φ^-1/2 (OKLCH). Texto sobre o acento é sempre <code>accent-fg</code> (escuro).
+      </p>
+      <div class="grid grid-cols-5 gap-inner-sm sm:grid-cols-10">
+        <div v-for="n in accentScale" :key="n" class="rounded-card border border-border p-2">
+          <div class="h-12 rounded-control border border-border" :style="{ background: `var(--accent-${n})` }" />
+          <code class="mt-1 block text-caption text-fg-muted">{{ n }}</code>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="mb-inner text-heading font-bold">Tipografia · Inter 4.1 (variável) · passo φ^(1/4)</h2>
       <p v-for="[cls, px] in texts" :key="cls" class="mb-2 truncate" :class="cls">
         {{ cls }} · {{ px }} · Ambré
       </p>

@@ -5,7 +5,25 @@
  * Valores crus ficam em :root (dark por padrão, [data-theme='light'] sobrescreve).
  * `@theme inline` expõe os tokens como classes Tailwind (bg-surface, text-fg-muted, mt-group...).
  * Nunca use valor hardcoded (#hex, px solto) em componentes: crie/atualize um token aqui.
+ *
+ * PROPORÇÃO ÁUREA (φ = 1,6180339887). Todas as escalas saem dela:
+ *   tipografia: passo = φ^(1/4) (×1,128; 4 passos = ×φ), base 1rem
+ *   espaçamento e raios: passo = φ^(1/2) (×1,272; 2 passos = ×φ), base 1rem
+ *   cor primária (accent-50…900): 500 = #F5C518; claros fecham a distância até o branco por φ^(-1/2) a cada passo
+ *   (em OKLCH), escuros multiplicam a luminosidade por φ^(-1/2) a cada passo. Croma limitado ao gamut sRGB.
+ * Valores em rem estão calculados e arredondados em 4 casas; o expoente fica no comentário de cada token.
+ * Exceção: --spacing-touch (44px) é mínimo de plataforma para toque, não parte da escala.
  */
+
+/* Inter 4.1 (github.com/rsms/inter, release v4.1 de 2024-11-16), variável (wght 100–900, opsz 14–32), hospedada localmente.
+   Licença SIL OFL 1.1 em src/assets/fonts/LICENSE-Inter.txt. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../assets/fonts/InterVariable.woff2') format('woff2');
+}
 
 :root,
 [data-theme='dark'] {
@@ -22,10 +40,11 @@
   --fg-muted: #cfd3d6;
   --fg-subtle: #adb2b8;
 
-  /* Acento: SOMENTE a ação principal da tela (ver AGENTS.md) */
-  --accent: #9333ea;
-  --accent-hover: #9f45f0; /* branco = 4,58:1 (era 3,96 com #a855f7); 3,98:1 contra --bg, então o botão não some no hover */
-  --accent-fg: #ffffff;
+  /* Acento (cor primária #F5C518): SOMENTE a ação principal da tela (ver AGENTS.md).
+     Texto sobre o acento é escuro (--accent-fg): 11,2:1 sobre #F5C518. Branco daria 1,6:1 e não pode ser usado. */
+  --accent: var(--accent-500);
+  --accent-hover: var(--accent-400); /* claro: 12,5:1 com --accent-fg; 11,2:1 do acento contra --bg */
+  --accent-fg: #151517;
 
   /* Marcação/anotação (pino, realce, contador do Feedback Layer). NÃO é acento: não use na ação principal */
   --mark: #fbbf24;
@@ -33,8 +52,22 @@
   --success: #4ade80;
 
   /* Estados */
-  --focus-ring: #c084fc;
+  --focus-ring: var(--accent-500); /* 11,2:1 contra --bg */
   --danger: #f87171;
+}
+
+/* Escala da cor primária (proporção áurea, ver cabeçalho). Igual nos dois temas. */
+:root {
+  --accent-50: #ffeec1;
+  --accent-100: #ffeab1;
+  --accent-200: #fee49b;
+  --accent-300: #ffdb77;
+  --accent-400: #fcd152;
+  --accent-500: #f5c518; /* primária */
+  --accent-600: #b28e04;
+  --accent-700: #80660d;
+  --accent-800: #5b4804;
+  --accent-900: #403100;
 }
 
 [data-theme='light'] {
@@ -47,13 +80,13 @@
   --fg: #151517;
   --fg-muted: #3d4146;
   --fg-subtle: #656b72;
-  --accent: #7e22ce;
-  --accent-hover: #6b21a8;
-  --accent-fg: #ffffff;
+  --accent: var(--accent-500); /* #F5C518 sobre #ffffff dá só 1,6:1: o botão se separa do fundo pelo texto escuro (11,2:1) e pelo anel de foco */
+  --accent-hover: var(--accent-600); /* 5,9:1 com --accent-fg */
+  --accent-fg: #151517;
   --mark: #b45309;
   --mark-fg: #ffffff;
   --success: #166534;
-  --focus-ring: #7e22ce;
+  --focus-ring: var(--accent-700); /* 5,5:1 contra #ffffff */
   --danger: #b91c1c; /* #dc2626 dava 4,15:1 sobre --surface; este dá 5,56:1 */
 }
 
@@ -70,6 +103,16 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-fg: var(--accent-fg);
+  --color-accent-50: var(--accent-50);
+  --color-accent-100: var(--accent-100);
+  --color-accent-200: var(--accent-200);
+  --color-accent-300: var(--accent-300);
+  --color-accent-400: var(--accent-400);
+  --color-accent-500: var(--accent-500);
+  --color-accent-600: var(--accent-600);
+  --color-accent-700: var(--accent-700);
+  --color-accent-800: var(--accent-800);
+  --color-accent-900: var(--accent-900);
   --color-mark: var(--mark);
   --color-mark-fg: var(--mark-fg);
   --color-success: var(--success);
@@ -81,24 +124,24 @@
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  /* Escala tipográfica (vinda do Paper "Kind wave") */
-  --text-micro: 0.625rem; /* 10 */
-  --text-caption: 0.75rem; /* 12 */
-  --text-body: 0.8125rem; /* 13 */
-  --text-body-lg: 0.875rem; /* 14 */
-  --text-title: 1.0625rem; /* 17 */
-  --text-heading: 1.125rem; /* 18 */
-  --text-display: 3.5rem; /* 56 */
+  /* Escala tipográfica áurea: n quartos de passo = 1rem × φ^(n/4). 4 passos = ×φ. */
+  --text-micro: 0.618rem; /* φ^(-4/4) = 9,9px */
+  --text-caption: 0.6972rem; /* φ^(-3/4) = 11,2px */
+  --text-body: 0.7862rem; /* φ^(-2/4) = 12,6px */
+  --text-body-lg: 0.8867rem; /* φ^(-1/4) = 14,2px */
+  --text-title: 1.1278rem; /* φ^(+1/4) = 18,0px */
+  --text-heading: 1.272rem; /* φ^(+2/4) = 20,4px */
+  --text-display: 3.3302rem; /* φ^(+10/4) = 53,3px */
 
-  /* Espaçamento semântico. Cabeçalhos têm DOIS grupos: use inner dentro do grupo e group entre grupos. */
-  --spacing-inner-sm: 0.8125rem; /* 13 */
-  --spacing-inner: 1rem; /* 16 */
-  --spacing-group: 2.125rem; /* 34: >= 2x o maior inner */
-  --spacing-touch: 2.75rem; /* 44: alvo mínimo de toque */
+  /* Espaçamento áureo: 1rem × φ^(n/2). Cabeçalhos têm DOIS grupos: use inner dentro do grupo e group entre grupos. */
+  --spacing-inner-sm: 0.7862rem; /* φ^(-1/2) = 12,6px */
+  --spacing-inner: 1rem; /* φ^0 = 16px */
+  --spacing-group: 2.0582rem; /* φ^(+3/2) = 32,9px: >= 2x o maior inner */
+  --spacing-touch: 2.75rem; /* 44px: mínimo de plataforma para toque, fora da escala */
 
-  /* Raios */
-  --radius-control: 0.5rem;
-  --radius-card: 0.75rem;
+  /* Raios áureos: 1rem × φ^(n/2) */
+  --radius-control: 0.4859rem; /* φ^(-3/2) = 7,8px */
+  --radius-card: 0.7862rem; /* φ^(-1/2) = 12,6px */
   --radius-pill: 999px;
 
   /* Elementos flutuantes: reserve esta altura no fim da rolagem (ver FloatingSafeArea).
@@ -122,6 +165,7 @@ html[data-feedback-layer='visible'] {
   }
   body {
     @apply bg-bg font-sans text-body text-fg antialiased;
+    font-optical-sizing: auto; /* Inter variável: eixo opsz */
   }
   :focus-visible {
     outline: 2px solid var(--focus-ring);

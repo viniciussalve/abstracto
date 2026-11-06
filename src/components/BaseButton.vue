@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * Variantes:
- * - primary: a ÚNICA ação principal da tela (roxo). Use no máximo 1 por tela/seção.
+ * - primary: a ÚNICA ação principal da tela (amarelo #F5C518). Use no máximo 1 por tela/seção.
  * - secondary: ações de apoio, com fundo visível (surface). Nunca "sem fundo" ao lado de um primary.
  * - ghost: ações terciárias.
  * iconOnly: botão quadrado/circular; sempre passe `label` (aria-label).

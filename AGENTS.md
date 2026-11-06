@@ -16,7 +16,7 @@ O **código é a fonte da verdade** do design. Antes de criar qualquer UI:
 Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
 1. **Espaçamento em poucos níveis.** Agrupe em blocos. Dentro do grupo: `inner-sm`/`inner`. Entre grupos: `group` (>= 2x o maior `inner`). Cabeçalho de perfil = 2 grupos (identidade | ações). Nunca 4–5 espaços diferentes empilhados.
 2. **Hierarquia.** Título principal em `text-display`; rótulo de categoria pequeno acima (não na mesma linha de peso).
-3. **Acento (roxo) só na ação principal.** `BaseButton variant="primary"` no máximo 1 por tela/seção. Não use `accent` em contadores, gráficos, selos ou links. Ações secundárias usam `secondary` (com fundo visível, nunca texto solto ao lado do primary).
+3. **Acento (amarelo #F5C518) só na ação principal.** `BaseButton variant="primary"` no máximo 1 por tela/seção. Não use `accent` em contadores, gráficos, selos ou links. Ações secundárias usam `secondary` (com fundo visível, nunca texto solto ao lado do primary).
 4. **Sem informação repetida.** Contadores ficam nas abas, não também no cabeçalho. Um player só (nada de mini player duplicado). Uma navegação de retorno só (breadcrumb **ou** botão voltar).
 5. **Sem a mesma arte repetida.** Lista de faixas = `TrackRow` numerado, não grade de capas iguais.
 6. **Flutuantes nunca cobrem conteúdo.** Player, botão de IA, FAB: sempre renderize `<FloatingSafeArea />` no fim do conteúdo rolável. A área reservada (`--spacing-floating`, 9rem) comporta o player (76px) **mais** um botão flutuante de 44px acima dele; posicione o botão a `--spacing-floating − inner − touch` do rodapé.
@@ -28,7 +28,7 @@ Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
 
 ## Antes de dar uma tela por pronta (checklist)
 - [ ] Só tokens e componentes do DS (grep por `#`, `px]` em `.vue`).
-- [ ] No máximo 1 `primary`; roxo em nenhum outro lugar.
+- [ ] No máximo 1 `primary`; o acento (`accent`) em nenhum outro lugar.
 - [ ] Grupos de espaçamento claros; sem info duplicada.
 - [ ] Elemento flutuante => `FloatingSafeArea`.
 - [ ] Estados: vazio, erro, carregando, imagem quebrada, texto longo.
