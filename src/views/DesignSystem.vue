@@ -6,6 +6,20 @@ import CoverArt from '@/components/CoverArt.vue'
 import TabBar from '@/components/TabBar.vue'
 import TrackRow from '@/components/TrackRow.vue'
 import AlbumCard from '@/components/AlbumCard.vue'
+import Icon from '@/components/Icon.vue'
+import {
+  Alert02Icon,
+  Home01Icon,
+  Message01Icon,
+  MoreHorizontalIcon,
+  NextIcon,
+  PauseIcon,
+  PlayIcon,
+  PreviousIcon,
+  Search01Icon,
+  ShuffleIcon,
+  Tick02Icon,
+} from '@hugeicons/core-free-icons'
 
 /**
  * Página viva do design system. Ao criar ou alterar um componente/token, ATUALIZE esta página
@@ -33,9 +47,37 @@ const spaces = [
   ['inner-sm', '12.6px'],
   ['inner', '16px'],
   ['group', '32.9px'],
+  ['icon-sm', '16px'],
+  ['icon-md', '20.4px'],
+  ['icon-lg', '25.9px'],
   ['touch', '44px'],
   ['floating', '104px'],
 ] as const
+
+// Ícones: só os que o app usa. Cada um importado por nome (ver Icon.vue).
+const iconSet = [
+  ['PlayIcon', PlayIcon],
+  ['PauseIcon', PauseIcon],
+  ['PreviousIcon', PreviousIcon],
+  ['NextIcon', NextIcon],
+  ['ShuffleIcon', ShuffleIcon],
+  ['MoreHorizontalIcon', MoreHorizontalIcon],
+  ['Tick02Icon', Tick02Icon],
+  ['Alert02Icon', Alert02Icon],
+  ['Message01Icon', Message01Icon],
+] as const
+const iconSizes = [
+  ['sm', 'icon-sm · 16px · φ^0'],
+  ['md', 'icon-md · 20,4px · φ^1/2'],
+  ['lg', 'icon-lg · 25,9px · φ^1'],
+] as const
+const iconColors = ['text-fg', 'text-fg-muted', 'text-fg-subtle', 'text-mark', 'text-success', 'text-danger'] as const
+const navItems = [
+  { id: 'home', label: 'Início', icon: Home01Icon },
+  { id: 'search', label: 'Buscar', icon: Search01Icon },
+  { id: 'play', label: 'Tocando', icon: PlayIcon },
+] as const
+const navSelected = ref<string>('home')
 </script>
 
 <template>
@@ -84,8 +126,8 @@ const spaces = [
       </p>
       <div class="flex flex-wrap items-center gap-inner-sm">
         <span class="inline-flex size-6 items-center justify-center rounded-pill bg-mark text-caption font-semibold text-mark-fg">1</span>
-        <span class="rounded-control bg-surface px-3 py-1 text-body font-semibold text-success">✓ Enviado</span>
-        <span class="rounded-control bg-surface px-3 py-1 text-body font-semibold text-danger">⚠ Não foi possível enviar</span>
+        <span class="inline-flex items-center gap-2 rounded-control bg-surface px-3 py-1 text-body font-semibold text-success"><Icon :icon="Tick02Icon" size="sm" /> Enviado</span>
+        <span class="inline-flex items-center gap-2 rounded-control bg-surface px-3 py-1 text-body font-semibold text-danger"><Icon :icon="Alert02Icon" size="sm" /> Não foi possível enviar</span>
       </div>
       <pre class="mt-inner overflow-auto rounded-control border border-border bg-bg p-inner-sm font-mono text-caption text-fg-muted">font-mono: # [bug · medium] nota</pre>
     </section>
@@ -111,15 +153,100 @@ const spaces = [
             aria-label="Abrir Feedback Layer"
             class="grid size-touch place-items-center rounded-pill border border-border bg-fg text-bg ring-2 ring-bg transition-colors hover:bg-fg-muted"
           >
-            <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z" />
-              <path d="M8.5 11.5h7M8.5 14.5h4" />
-            </svg>
+            <Icon :icon="Message01Icon" />
           </button>
           <div class="h-12 w-24 rounded-control bg-mark/15 outline-2 outline-fg ring-4 ring-bg" />
           <code class="text-caption text-fg-muted">host {{ t }}</code>
         </div>
       </div>
+    </section>
+
+    <section id="icones" data-ds="icons">
+      <h2 class="mb-inner text-heading font-bold">Ícones · Hugeicons Stroke Rounded</h2>
+      <p class="mb-inner text-body text-fg-muted">
+        Biblioteca padrão: Hugeicons, estilo Stroke Rounded (pacote grátis, MIT). Sempre via <code>&lt;Icon&gt;</code>:
+        nada de <code>&lt;svg&gt;</code> solto nem emoji. Herda <code>currentColor</code>. Ênfase muda só a espessura do traço
+        (<code>weight="bold"</code>), nunca o ícone. <code>variant="solid"</code> ainda renderiza o stroke: o preenchido é da
+        versão Pro (paga) e não está instalado.
+      </p>
+
+      <h3 class="mb-inner-sm text-title font-semibold">Em uso no app</h3>
+      <div class="mb-group flex flex-wrap gap-inner-sm" data-ds="icons-set">
+        <div v-for="[name, ic] in iconSet" :key="name" class="flex w-28 flex-col items-center gap-2 rounded-card border border-border p-2">
+          <Icon :icon="ic" size="lg" class="text-fg" />
+          <code class="max-w-full truncate text-caption text-fg-muted">{{ name }}</code>
+        </div>
+      </div>
+
+      <h3 class="mb-inner-sm text-title font-semibold">Tamanhos</h3>
+      <div class="mb-group flex flex-wrap items-end gap-group" data-ds="icons-sizes">
+        <div v-for="[s, note] in iconSizes" :key="s" class="flex flex-col items-center gap-2">
+          <Icon :icon="PlayIcon" :size="s" class="text-fg" />
+          <code class="text-caption text-fg-muted">{{ s }}</code>
+          <span class="text-caption text-fg-subtle">{{ note }}</span>
+        </div>
+      </div>
+
+      <h3 class="mb-inner-sm text-title font-semibold">Cores, nos dois temas</h3>
+      <div class="mb-group grid gap-inner sm:grid-cols-2" data-ds="icons-colors">
+        <div
+          v-for="t in ['dark', 'light']"
+          :key="t"
+          :data-theme="t"
+          :data-ds-theme="t"
+          class="flex flex-col gap-inner-sm rounded-card border border-border bg-bg p-inner text-fg"
+        >
+          <code class="text-caption text-fg-muted">tema {{ t }}</code>
+          <div class="flex flex-wrap items-center gap-inner">
+            <span v-for="c in iconColors" :key="c" class="flex flex-col items-center gap-1" :class="c">
+              <Icon :icon="ShuffleIcon" size="lg" />
+              <code class="text-caption">{{ c.replace('text-', '') }}</code>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="mb-inner-sm text-title font-semibold">Estados: normal, ativo, selecionado</h3>
+      <p class="mb-inner text-body text-fg-muted">
+        Normal: <code>fg-muted</code>, traço regular. Ativo (hover/foco/pressionado): <code>fg</code>. Selecionado:
+        <code>fg</code> + traço <code>bold</code> (e <code>aria-pressed</code> ou <code>aria-current</code>). Nada de acento.
+      </p>
+      <div class="mb-inner grid gap-inner sm:grid-cols-2" data-ds="icons-states">
+        <div
+          v-for="t in ['dark', 'light']"
+          :key="t"
+          :data-theme="t"
+          :data-ds-theme="t"
+          class="flex flex-wrap items-center gap-group rounded-card border border-border bg-bg p-inner text-fg"
+        >
+          <span class="flex flex-col items-center gap-1 text-fg-muted" data-state="normal">
+            <Icon :icon="Home01Icon" size="lg" />
+            <code class="text-caption">normal</code>
+          </span>
+          <span class="flex flex-col items-center gap-1 text-fg" data-state="active">
+            <Icon :icon="Home01Icon" size="lg" />
+            <code class="text-caption">ativo</code>
+          </span>
+          <span class="flex flex-col items-center gap-1 text-fg" data-state="selected">
+            <Icon :icon="Home01Icon" size="lg" weight="bold" />
+            <code class="text-caption">selecionado</code>
+          </span>
+        </div>
+      </div>
+      <nav class="flex gap-inner-sm" aria-label="Exemplo de seleção" data-ds="icons-nav">
+        <button
+          v-for="n in navItems"
+          :key="n.id"
+          type="button"
+          :aria-label="n.label"
+          :aria-pressed="navSelected === n.id"
+          class="grid size-touch place-items-center rounded-pill transition-colors hover:bg-surface hover:text-fg"
+          :class="navSelected === n.id ? 'bg-surface text-fg' : 'text-fg-muted'"
+          @click="navSelected = n.id"
+        >
+          <Icon :icon="n.icon" :weight="navSelected === n.id ? 'bold' : 'regular'" />
+        </button>
+      </nav>
     </section>
 
     <section>
@@ -137,7 +264,7 @@ const spaces = [
         <BaseButton variant="primary">Primary (1 por tela)</BaseButton>
         <BaseButton>Secondary</BaseButton>
         <BaseButton variant="ghost">Ghost</BaseButton>
-        <BaseButton icon-only label="Mais">⋯</BaseButton>
+        <BaseButton icon-only label="Mais"><Icon :icon="MoreHorizontalIcon" /></BaseButton>
         <BaseButton variant="primary" disabled>Disabled</BaseButton>
         <BaseButton variant="primary" loading>Loading</BaseButton>
       </div>
@@ -156,8 +283,8 @@ const spaces = [
       <h2 class="mb-inner text-heading font-bold">ArtistHeader</h2>
       <ArtistHeader label="Artist" name="Ambré" meta="In your library · 2026 · 36 min">
         <template #actions>
-          <BaseButton variant="primary">▶ Play</BaseButton>
-          <BaseButton icon-only label="Aleatório">🔀</BaseButton>
+          <BaseButton variant="primary"><Icon :icon="PlayIcon" /> Play</BaseButton>
+          <BaseButton icon-only label="Aleatório"><Icon :icon="ShuffleIcon" /></BaseButton>
         </template>
       </ArtistHeader>
     </section>
