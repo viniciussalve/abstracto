@@ -157,6 +157,9 @@
   --spacing-inner-sm: 0.7862rem; /* φ^(-1/2) = 12,6px */
   --spacing-inner: 1rem; /* φ^0 = 16px */
   --spacing-group: 2.0582rem; /* φ^(+3/2) = 32,9px: >= 2x o maior inner */
+  --spacing-icon-sm: 1rem; /* φ^0 = 16px */
+  --spacing-icon-md: 1.272rem; /* φ^(+1/2) = 20,4px */
+  --spacing-icon-lg: 1.618rem; /* φ^(+2/2) = 25,9px */
   /* @tokens:end space-scale */
   --spacing-touch: 2.75rem; /* 44px: mínimo de plataforma para toque, fora da escala */
 

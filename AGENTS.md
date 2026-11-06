@@ -11,6 +11,7 @@ O **código é a fonte da verdade** do design. Antes de criar qualquer UI:
 - **Componente novo ou alterado => atualize `src/views/DesignSystem.vue`** no mesmo commit.
 - **Mobile-first.** Um único código responsivo. Alvo de toque >= `min-h-touch` (44px). Teste ~360px de largura e desktop.
 - **Acessibilidade.** Botão só com ícone exige `label`. Foco visível (já global). Contraste: texto sobre `bg`/`surface` usa `fg`/`fg-muted`; `fg-subtle` só para informação secundária não essencial.
+- **Ícones: Hugeicons Stroke Rounded, só via `<Icon>`.** Biblioteca padrão e única: Hugeicons, estilo Stroke Rounded (pacote grátis `@hugeicons/core-free-icons`, MIT, versão fixa). Em tela, ícone é `<Icon :icon="PlayIcon" size="md" />` (`src/components/Icon.vue`). Importe cada ícone **por nome** (`import { PlayIcon } from '@hugeicons/core-free-icons'`), nunca `import *`. Proibido: `<svg>` solto, emoji ou caractere (`▶ ⏸ ⋯ ✓ ⚠`) como ícone, outra biblioteca de ícones e qualquer `@hugeicons-pro/*` (pago, exige token). `@hugeicons/vue` só é importado dentro de `Icon.vue`. Tamanhos `sm|md|lg` (tokens `--spacing-icon-*`), cor herdada (`currentColor`: use `text-fg`, `text-fg-muted`...). Ênfase (ativo/selecionado) = cor + `weight="bold"` (só muda o `strokeWidth`; nunca troque de ícone nem use filtro). `variant="solid"` hoje renderiza o stroke: o preenchido é da versão Pro, e se ela for comprada só `Icon.vue` muda. Ícone sem texto vizinho é decorativo (`aria-hidden`): o botão leva `label`. Falta um ícone no pacote grátis? Liste e pergunte; não invente SVG.
 
 ## Regras de composição (aprendidas na revisão do Paper "Kind wave")
 Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
@@ -36,6 +37,7 @@ Cada regra vem de uma correção real. Veja `docs/LESSONS.md`.
 
 ## Antes de dar uma tela por pronta (checklist)
 - [ ] Só tokens e componentes do DS (grep por `#`, `px]` em `.vue`).
+- [ ] Ícones só via `<Icon>` (grep por `<svg`, emoji e `@hugeicons/vue` fora de `Icon.vue`).
 - [ ] No máximo 1 `primary`; o acento (`accent`) em nenhum outro lugar.
 - [ ] Grupos de espaçamento claros; sem info duplicada.
 - [ ] Elemento flutuante => `FloatingSafeArea`.

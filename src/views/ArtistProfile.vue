@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import ArtistHeader from '@/components/ArtistHeader.vue'
+import { MoreHorizontalIcon, PlayIcon, ShuffleIcon } from '@hugeicons/core-free-icons'
 import BaseButton from '@/components/BaseButton.vue'
+import Icon from '@/components/Icon.vue'
 import TabBar from '@/components/TabBar.vue'
 import TrackRow from '@/components/TrackRow.vue'
 import AlbumCard from '@/components/AlbumCard.vue'
@@ -22,9 +24,9 @@ const tracks = [
   <main class="mx-auto max-w-5xl px-inner pt-group">
     <ArtistHeader label="Artist" name="Ambré" meta="In your library · 2026 · 36 min">
       <template #actions>
-        <BaseButton variant="primary">▶ Play</BaseButton>
-        <BaseButton variant="secondary" icon-only label="Aleatório">🔀</BaseButton>
-        <BaseButton variant="secondary" icon-only label="Mais">⋯</BaseButton>
+        <BaseButton variant="primary"><Icon :icon="PlayIcon" /> Play</BaseButton>
+        <BaseButton variant="secondary" icon-only label="Aleatório"><Icon :icon="ShuffleIcon" /></BaseButton>
+        <BaseButton variant="secondary" icon-only label="Mais"><Icon :icon="MoreHorizontalIcon" /></BaseButton>
       </template>
     </ArtistHeader>
 

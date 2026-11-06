@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { NextIcon, PauseIcon, PlayIcon, PreviousIcon } from '@hugeicons/core-free-icons'
 import BaseButton from './BaseButton.vue'
+import Icon from './Icon.vue'
 import CoverArt from './CoverArt.vue'
 
 /**
@@ -21,10 +23,10 @@ defineEmits<{ toggle: []; prev: []; next: [] }>()
       <p class="truncate text-body-lg font-semibold">{{ title }}</p>
       <p class="truncate text-body text-fg-muted">{{ artist }}</p>
     </div>
-    <BaseButton variant="ghost" icon-only label="Anterior" @click="$emit('prev')">⏮</BaseButton>
+    <BaseButton variant="ghost" icon-only label="Anterior" @click="$emit('prev')"><Icon :icon="PreviousIcon" /></BaseButton>
     <BaseButton variant="primary" icon-only :label="playing ? 'Pausar' : 'Tocar'" @click="$emit('toggle')">
-      {{ playing ? '⏸' : '▶' }}
+      <Icon :icon="playing ? PauseIcon : PlayIcon" />
     </BaseButton>
-    <BaseButton variant="ghost" icon-only label="Próxima" @click="$emit('next')">⏭</BaseButton>
+    <BaseButton variant="ghost" icon-only label="Próxima" @click="$emit('next')"><Icon :icon="NextIcon" /></BaseButton>
   </div>
 </template>

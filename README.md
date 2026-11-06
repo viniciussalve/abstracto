@@ -15,6 +15,18 @@ git clone git@github.com:viniciussalve/feedback-layer.git ../feedback-layer
 cd ../feedback-layer && npm install && npm run build
 ```
 
+## Ícones
+
+Biblioteca padrão: [Hugeicons](https://hugeicons.com/), **só Stroke Rounded** (pacote grátis `@hugeicons/core-free-icons`, MIT, com `@hugeicons/vue`; versões fixas no `package.json`). **Não use `@hugeicons-pro/*`**: é pago e exige token do npm. Todo ícone passa pelo componente único `src/components/Icon.vue` (`icon`, `size` `sm|md|lg`, `weight` `regular|bold`, `variant` `stroke|solid`, `label`); a seção "Ícones" de `/design-system` mostra tamanhos, cores e estados nos dois temas. `variant="solid"` ainda renderiza o stroke, porque o estilo preenchido é da versão Pro; se ela for comprada, só `Icon.vue` muda.
+
+```vue
+<script setup lang="ts">
+import { PlayIcon } from '@hugeicons/core-free-icons' // por nome: o bundle leva só o que é usado
+import Icon from '@/components/Icon.vue'
+</script>
+<template><BaseButton icon-only label="Tocar"><Icon :icon="PlayIcon" /></BaseButton></template>
+```
+
 ## Tokens gerados
 
 `tokens.config.json` é a entrada; `scripts/tokens.mjs` (sem dependências) escreve as regiões `@tokens:begin … @tokens:end` de `src/styles/tokens.css` (escalas áureas, `accent-50…900`, hover/foco/texto do acento por tema, cabeçalho de fórmulas) e o espelho do feedback-layer (`../feedback-layer/packages/core/src/fallback-tokens.generated.ts`). Não edite essas regiões nem o arquivo gerado à mão.
