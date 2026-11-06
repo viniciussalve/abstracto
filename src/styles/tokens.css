@@ -126,7 +126,7 @@
 
   /* Escala tipográfica áurea: n quartos de passo = 1rem × φ^(n/4). 4 passos = ×φ. */
   --text-micro: 0.618rem; /* φ^(-4/4) = 9,9px */
-  --text-caption: 0.6972rem; /* φ^(-3/4) = 11,2px */
+  --text-caption: 0.697rem; /* φ^(-3/4) = 11,2px */
   --text-body: 0.7862rem; /* φ^(-2/4) = 12,6px */
   --text-body-lg: 0.8867rem; /* φ^(-1/4) = 14,2px */
   --text-title: 1.1278rem; /* φ^(+1/4) = 18,0px */
