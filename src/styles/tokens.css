@@ -47,7 +47,7 @@
   --accent-fg: #151517;
 
   /* Marcação/anotação (pino, realce, contador do Feedback Layer). NÃO é acento: não use na ação principal */
-  --mark: #fbbf24;
+  --mark: #38bdf8; /* azul: distante do acento dourado; 8,5:1 sobre --bg */
   --mark-fg: #151517;
   --success: #4ade80;
 
@@ -83,7 +83,7 @@
   --accent: var(--accent-500); /* #F5C518 sobre #ffffff dá só 1,6:1: o botão se separa do fundo pelo texto escuro (11,2:1) e pelo anel de foco */
   --accent-hover: var(--accent-600); /* 5,9:1 com --accent-fg */
   --accent-fg: #151517;
-  --mark: #b45309;
+  --mark: #0369a1; /* 5,9:1 sobre --bg; 5,1:1 sobre --surface */
   --mark-fg: #ffffff;
   --success: #166534;
   --focus-ring: var(--accent-700); /* 5,5:1 contra #ffffff */
